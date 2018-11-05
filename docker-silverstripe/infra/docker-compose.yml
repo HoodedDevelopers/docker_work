@@ -1,0 +1,23 @@
+version: '3.1'
+
+services:
+
+  silverstripe:
+    image: brettt89/silverstripe-web
+    ports:
+      - 8080:80
+    working_dir: /var/www/html
+    volumes:
+      - ../ss_site:/var/www/html
+    command: composer create-project silverstripe/installer ./ss_site ^4
+
+  mysql:
+    image: mysql:5.7
+    volumes:
+      - db-data:/var/lib/mysql
+    restart: always
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=true
+
+volumes:
+ db-data:
